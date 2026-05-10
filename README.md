@@ -1,32 +1,50 @@
-# GROUP-NAME - lab NUMBER - variant NUMBER
+# GROUP-NAME - lab 2 - variant 7
 
-This is an example project which demonstrates project structure and necessary
-CI checks. It is not the best structure for real-world projects, but good
-enough for educational purposes.
+This project implements an immutable Dictionary based on a Hash-map
+using Separate Chaining. It is built strictly adhering to functional
+programming principles, utilizing recursion instead of loops, and
+ensuring no in-place mutations occur.
 
 ## Project structure
 
-- `foo.py` -- implementation of `Foo` class with `hello` and `add` features.
-   Stateless.
-- `foo_test.py` -- unit and PBT tests for `Foo`.
+- `hash_dict.py` -- implementation of `HashMap` and `Node` classes
+  with immutable separate chaining logic and a function-style API.
+- `hash_dict_test.py` -- unit, PBT, monoid, and immutability tests
+  for `HashMap`.
 
 ## Features
 
-- PBT: `test_add_commutative`
+- Immutable Dictionary based on Hash-map with Separate Chaining.
+- Function-style API (`cons`, `remove`, `member`, `length`, etc.).
+- Monoid properties: associativity and identity (`empty`, `concat`).
+- PBT: `test_pbt_conversion`, `test_pbt_member_from_list`.
+- Immutability guarantees with structural sharing.
 
 ## Contribution
 
-- Aleksandr Penskoi (EMAIL) -- all work.
+- [Your Name] ([Your Email]) -- all work.
 
 ## Changelog
 
-- 29.03.2022 - 2
-  - Add test coverage.
-- 29.03.2022 - 1
-  - Update README. Add formal sections.
-- 29.03.2022 - 0
-  - Initial
+- 10.05.2026 - 2
+  - Add unit, PBT, monoid, and immutability tests.
+- 8.05.2026 - 1
+  - Add hash_dict.py and hash_dict_test.py.
+- 6.05.2026 - 0
+  - Initial project structure.
 
 ## Design notes
 
-- ...
+- **Immutability via Tuples:** Buckets are stored as a `Tuple` instead
+  of a `list` to guarantee physical immutability at the language level.
+- **Recursive Implementation:** All traversals (buckets and chains)
+  use recursive helper functions instead of `for`/`while` loops.
+- **Generic Invariance Bypass:** Python's type system is invariant.
+  Inserting a new key type (e.g., `None` into `str`) requires type
+  widening (`K | K2`). To prevent Pylance/mypy errors, internal chain
+  helpers (`_cons_chain`) use `object` types. This isolates the type
+  compromise while keeping the public API strictly typed.
+- **Structural Sharing:** `remove` and `cons` reuse unchanged nodes
+  and bucket references to minimize memory overhead.
+- **PEP 8 Compliance:** All lines strictly adhere to the 79-character
+  limit.
