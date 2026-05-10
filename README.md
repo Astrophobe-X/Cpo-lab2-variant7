@@ -1,4 +1,4 @@
-# GROUP-NAME - lab 2 - variant 7
+# GROUP-7 - lab 2 - variant 7
 
 This project implements an immutable Dictionary based on a Hash-map
 using Separate Chaining. It is built strictly adhering to functional
