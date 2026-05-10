@@ -27,11 +27,11 @@ ensuring no in-place mutations occur.
 ## Changelog
 
 - 10.05.2026 - 2
-  - Add unit, PBT, monoid, and immutability tests.
+  Add unit, PBT, monoid, and immutability tests.
 - 8.05.2026 - 1
-  - Add hash_dict.py and hash_dict_test.py.
+  Add hash_dict.py and hash_dict_test.py.
 - 6.05.2026 - 0
-  - Initial project structure.
+  Initial project structure.
 
 ## Design notes
 
