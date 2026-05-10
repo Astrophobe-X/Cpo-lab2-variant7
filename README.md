@@ -8,9 +8,9 @@ ensuring no in-place mutations occur.
 ## Project structure
 
 - `hash_dict.py` -- implementation of `HashMap` and `Node` classes
-  with immutable separate chaining logic and a function-style API.
+    with immutable separate chaining logic and a function-style API.
 - `hash_dict_test.py` -- unit, PBT, monoid, and immutability tests
-  for `HashMap`.
+    for `HashMap`.
 
 ## Features
 
@@ -22,7 +22,7 @@ ensuring no in-place mutations occur.
 
 ## Contribution
 
-- [Your Name] ([Your Email]) -- all work.
+- ZHENG Rongzhen(1661342449@qq.com) -- all work.
 
 ## Changelog
 
@@ -37,14 +37,14 @@ ensuring no in-place mutations occur.
 
 - **Immutability via Tuples:** Buckets are stored as a `Tuple` instead
   of a `list` to guarantee physical immutability at the language level.
-- **Recursive Implementation:** All traversals (buckets and chains)
-  use recursive helper functions instead of `for`/`while` loops.
+- **Recursive Implementation:** All traversals (buckets and chains) use
+  recursive helper functions instead of `for`/`while` loops.
 - **Generic Invariance Bypass:** Python's type system is invariant.
   Inserting a new key type (e.g., `None` into `str`) requires type
   widening (`K | K2`). To prevent Pylance/mypy errors, internal chain
   helpers (`_cons_chain`) use `object` types. This isolates the type
   compromise while keeping the public API strictly typed.
-- **Structural Sharing:** `remove` and `cons` reuse unchanged nodes
-  and bucket references to minimize memory overhead.
+- **Structural Sharing:** `remove` and `cons` reuse unchanged nodes and
+  bucket references to minimize memory overhead.
 - **PEP 8 Compliance:** All lines strictly adhere to the 79-character
   limit.
