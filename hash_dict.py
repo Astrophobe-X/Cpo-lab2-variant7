@@ -67,7 +67,7 @@ class HashMap(Generic[K, V]):
             o_node = _get_node(
                 other.buckets[_hash_key(node.key, other.capacity)],
                 node.key
-            )  # type: ignore
+            )
             if o_node is None or o_node.value != node.value:
                 return False
             return _check_chain(node.nxt)
@@ -142,7 +142,7 @@ def _member_chain(key: object, node: Optional[Node[K, V]]) -> bool:
 
 
 # Function-style API Implementation
-def empty() -> HashMap[K, V]:  # pyright: ignore[reportInvalidTypeVarUse]
+def empty() -> HashMap[K, V]:
     return HashMap()
 
 
@@ -155,7 +155,7 @@ def cons(
         d.buckets  # type: ignore
     new_chain = _cons_chain(key, value, b_obj[idx])
     new_buckets = b_obj[:idx] + (new_chain,) + b_obj[idx+1:]
-    return HashMap(new_buckets, d.capacity)  # type: ignore
+    return HashMap(new_buckets, d.capacity)
 
 
 def remove(d: HashMap[K, V], key: object) -> HashMap[K, V]:
@@ -214,7 +214,7 @@ def from_list(lst: List[Tuple[K, V]]) -> HashMap[K, V]:
             return d
         k, v = lst[idx]
         # Union[K, K] simplifies to K, variance check ignored
-        return _from_list_rec(idx + 1, cons(k, v, d))  # type: ignore
+        return _from_list_rec(idx + 1, cons(k, v, d))
     return _from_list_rec(0, empty())
 
 
@@ -313,7 +313,7 @@ def concat(
     d1: HashMap[K, V], d2: HashMap[K2, V2]
 ) -> HashMap[Union[K, K2], Union[V, V2]]:
     lst = to_list(d1) + to_list(d2)
-    return from_list(lst)  # type: ignore
+    return from_list(lst)
 
 
 def iterator(d: HashMap[K, V]) -> Iterator[K]:
