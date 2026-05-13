@@ -1,4 +1,4 @@
-# GROUP-NAME - lab 2 - variant 7
+# GROUP-7 - lab 2 - variant 7
 
 This project implements an immutable Dictionary based on a Hash-map
 using Separate Chaining. It is built strictly adhering to functional
@@ -26,8 +26,10 @@ ensuring no in-place mutations occur.
 
 ## Changelog
 
+- 13.05.2026 - 2
+  Add PBT tests.
 - 10.05.2026 - 2
-  Add unit, PBT, monoid, and immutability tests.
+  Add unit, monoid, and immutability tests.
 - 8.05.2026 - 1
   Add hash_dict.py and hash_dict_test.py.
 - 6.05.2026 - 0
@@ -48,5 +50,3 @@ ensuring no in-place mutations occur.
   bucket references to minimize memory overhead.
 - **PEP 8 Compliance:** All lines strictly adhere to the 79-character
   limit.
-
-## Difference between

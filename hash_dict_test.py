@@ -1,8 +1,16 @@
 import itertools
 import hash_dict as hm
+from hypothesis import given, strategies as st
 
 
-# Variant 7 Mandatory API Test
+# Hypothesis Strategies for PBT
+hashable_key = st.one_of(st.none(), st.integers(), st.text())
+hashable_value = st.one_of(st.none(), st.integers(), st.text())
+kv_pair = st.tuples(hashable_key, hashable_value)
+kv_list = st.lists(kv_pair, max_size=20)
+
+
+# Mandatory API Test
 def test_api():
     empty_dict = hm.empty()
     l1 = hm.cons(None, "c", hm.cons(2, "b", hm.cons("a", 1, empty_dict)))
@@ -105,22 +113,21 @@ def test_monoid_identity():
 def test_filter_map_reduce():
     d = hm.from_list([("a", 1), ("b", 2), ("c", 3), ("d", 4)])
 
-    # Filter even values
     filtered = hm.filter(d, lambda kv: kv[1] % 2 == 0)
     perms3 = list(map(
         list, itertools.permutations([("b", 2), ("d", 4)])
     ))
     assert hm.to_list(filtered) in perms3
 
-    # Map values by adding 10
     mapped = hm.map(d, lambda kv: (kv[0], kv[1] + 10))
     perms4 = list(map(
         list,
-        itertools.permutations([("a", 11), ("b", 12), ("c", 13), ("d", 14)])
+        itertools.permutations(
+            [("a", 11), ("b", 12), ("c", 13), ("d", 14)]
+        )
     ))
     assert hm.to_list(mapped) in perms4
 
-    # Reduce to sum of values
     total = hm.reduce(d, lambda acc, kv: acc + kv[1], 0)
     assert total == 10
 
@@ -131,18 +138,67 @@ def test_find():
     assert hm.find(d, lambda kv: kv[1] == 99) is None
 
 
-# Property-Based Testing Simulation
-def test_pbt_conversion():
+# Property-Based Testing (Hypothesis)
+@given(kv_list)
+def test_pbt_conversion(lst):
     """Property: from_list(to_list(d)) == d"""
-    pairs = [("x", 1), ("y", 2), ("z", 3)]
-    d = hm.from_list(pairs)
+    d = hm.from_list(lst)
     assert d == hm.from_list(hm.to_list(d))
 
 
-def test_pbt_member_from_list():
+@given(kv_list)
+def test_pbt_member(lst):
     """Property: If k in list, member(k, from_list(list)) is True"""
-    pairs = [("p", 10), (None, "v"), (42, True)]
-    d = hm.from_list(pairs)
-    for k, v in pairs:
+    d = hm.from_list(lst)
+    for k, v in lst:
         assert hm.member(k, d)
-    assert not hm.member("missing", d)
+
+
+@given(kv_list)
+def test_pbt_length(lst):
+    """Property: length equals the number of unique keys"""
+    d = hm.from_list(lst)
+    unique_keys = set(k for k, v in lst)
+    assert hm.length(d) == len(unique_keys)
+
+
+@given(kv_list, kv_pair)
+def test_pbt_immutability_cons(lst, pair):
+    """Property: cons does not modify the original instance"""
+    d1 = hm.from_list(lst)
+    original_len = hm.length(d1)
+    d2 = hm.cons(pair[0], pair[1], d1)
+
+    assert hm.length(d1) == original_len
+    assert hm.length(d2) in (original_len, original_len + 1)
+
+
+@given(kv_list, hashable_key)
+def test_pbt_immutability_remove(lst, key):
+    """Property: remove does not modify the original instance"""
+    d1 = hm.from_list(lst)
+    original_len = hm.length(d1)
+    d2 = hm.remove(d1, key)
+
+    assert hm.length(d1) == original_len
+    assert hm.length(d2) in (original_len - 1, original_len)
+
+
+@given(kv_list, kv_list, kv_list)
+def test_pbt_monoid_associativity(l1, l2, l3):
+    """Property: Monoid associativity via random lists"""
+    d1 = hm.from_list(l1)
+    d2 = hm.from_list(l2)
+    d3 = hm.from_list(l3)
+
+    left = hm.concat(d1, hm.concat(d2, d3))
+    right = hm.concat(hm.concat(d1, d2), d3)
+    assert left == right
+
+
+@given(kv_list)
+def test_pbt_monoid_identity(lst):
+    """Property: Monoid identity via random lists"""
+    d = hm.from_list(lst)
+    assert hm.concat(d, hm.empty()) == d
+    assert hm.concat(hm.empty(), d) == d
