@@ -155,7 +155,7 @@ def cons(
         d.buckets  # type: ignore
     new_chain = _cons_chain(key, value, b_obj[idx])
     new_buckets = b_obj[:idx] + (new_chain,) + b_obj[idx+1:]
-    return HashMap(new_buckets, d.capacity) # type: ignore[arg-type]
+    return HashMap(new_buckets, d.capacity)  # type: ignore[arg-type]
 
 
 def remove(d: HashMap[K, V], key: object) -> HashMap[K, V]:
