@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import TypeVar, Generic, Callable, Optional
-from typing import Tuple, List, Iterator, Union
+from typing import Tuple, List, Iterator, Union, Sequence
 
 K = TypeVar('K')
 V = TypeVar('V')
@@ -155,7 +155,7 @@ def cons(
         d.buckets  # type: ignore
     new_chain = _cons_chain(key, value, b_obj[idx])
     new_buckets = b_obj[:idx] + (new_chain,) + b_obj[idx+1:]
-    return HashMap(new_buckets, d.capacity)
+    return HashMap(new_buckets, d.capacity) # type: ignore[arg-type]
 
 
 def remove(d: HashMap[K, V], key: object) -> HashMap[K, V]:
@@ -206,7 +206,7 @@ def to_list(d: HashMap[K, V]) -> List[Tuple[K, V]]:
     return _buckets_to_list(d.buckets)
 
 
-def from_list(lst: List[Tuple[K, V]]) -> HashMap[K, V]:
+def from_list(lst: Sequence[Tuple[K, V]]) -> HashMap[K, V]:
     def _from_list_rec(
         idx: int, d: HashMap[K, V]
     ) -> HashMap[K, V]:
