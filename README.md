@@ -67,4 +67,3 @@ ensuring no in-place mutations occur.
   synchronization in concurrent environments.
 - **Paradigm**: Immutable logic strictly uses recursion (functional),
   while mutable logic relies on loops (imperative).
-  
