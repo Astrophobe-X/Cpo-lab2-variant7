@@ -8,9 +8,9 @@ ensuring no in-place mutations occur.
 ## Project structure
 
 - `hash_dict.py` -- implementation of `HashMap` and `Node` classes
-    with immutable separate chaining logic and a function-style API.
+  with immutable separate chaining logic and a function-style API.
 - `hash_dict_test.py` -- unit, PBT, monoid, and immutability tests
-    for `HashMap`.
+  for `HashMap`.
 
 ## Features
 
@@ -53,8 +53,18 @@ ensuring no in-place mutations occur.
 
 ## Mutable vs. Immutable Comparison
 
-- **State Mutation**: Immutable types return a new instance upon modification (no side effects), whereas mutable types alter the existing data in-place.
-- **Underlying Storage**: Immutability is enforced at the language level by using `Tuple` for buckets and linked lists for chains. Mutable types use nested `List`s for efficient in-place updates.
-- **Memory**: Immutable types rely on structural sharing to reuse unchanged data, avoiding full deep copies. Mutable types modify existing memory directly, which is faster for single operations.
-- **Concurrency**: Immutable instances are inherently thread-safe without requiring locks. Mutable instances require external synchronization in concurrent environments.
-- **Paradigm**: Immutable logic strictly uses recursion (functional), while mutable logic relies on loops (imperative).
+- **State Mutation**: Immutable types return a new instance upon
+  modification (no side effects), whereas mutable types alter the
+  existing data in-place.
+- **Underlying Storage**: Immutability is enforced at the language
+  level by using `Tuple` for buckets and linked lists for chains.
+  Mutable types use nested `List`s for efficient in-place updates.
+- **Memory**: Immutable types rely on structural sharing to reuse
+  unchanged data, avoiding full deep copies. Mutable types modify
+  existing memory directly, which is faster for single operations.
+- **Concurrency**: Immutable instances are inherently thread-safe
+  without requiring locks. Mutable instances require external
+  synchronization in concurrent environments.
+- **Paradigm**: Immutable logic strictly uses recursion (functional),
+  while mutable logic relies on loops (imperative).
+  
