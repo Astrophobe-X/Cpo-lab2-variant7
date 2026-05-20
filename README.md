@@ -50,3 +50,11 @@ ensuring no in-place mutations occur.
   bucket references to minimize memory overhead.
 - **PEP 8 Compliance:** All lines strictly adhere to the 79-character
   limit.
+
+## Mutable vs. Immutable Comparison
+
+- **State Mutation**: Immutable types return a new instance upon modification (no side effects), whereas mutable types alter the existing data in-place.
+- **Underlying Storage**: Immutability is enforced at the language level by using `Tuple` for buckets and linked lists for chains. Mutable types use nested `List`s for efficient in-place updates.
+- **Memory**: Immutable types rely on structural sharing to reuse unchanged data, avoiding full deep copies. Mutable types modify existing memory directly, which is faster for single operations.
+- **Concurrency**: Immutable instances are inherently thread-safe without requiring locks. Mutable instances require external synchronization in concurrent environments.
+- **Paradigm**: Immutable logic strictly uses recursion (functional), while mutable logic relies on loops (imperative).
